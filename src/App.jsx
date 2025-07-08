@@ -120,11 +120,11 @@ function App() {
   return (
     <div className="min-h-screen w-full flex flex-col md:flex-row transition-all duration-500 bg-gradient-to-br from-blue-400 via-blue-300 to-slate-200 text-gray-900">
       {/* Mobile Topbar */}
-      <div className="md:hidden flex justify-between items-center p-4 bg-black/30 text-white">
+      {/* <div className="md:hidden flex justify-between items-center p-4 bg-black/30 text-white">
         <button onClick={() => setShowSidebar(!showSidebar)}>
           {showSidebar ? "✖️ Close" : "📍 Cities"}
         </button>
-      </div>
+      </div> */}
 
       {/* Sidebar */}
       {/* <aside
