@@ -52,33 +52,6 @@ const cities = [
   "Puducherry",
 ];
 
-const getWeatherBackground = (condition, darkMode) => {
-  const c = condition?.toLowerCase() || "";
-  if (darkMode) {
-    if (c.includes("sunny"))
-      return "from-yellow-900 via-orange-800 to-amber-700";
-    if (c.includes("cloud")) return "from-gray-800 via-slate-700 to-gray-600";
-    if (c.includes("rain")) return "from-blue-900 via-blue-800 to-slate-700";
-    if (c.includes("thunder"))
-      return "from-gray-900 via-gray-800 to-indigo-700";
-    if (c.includes("snow")) return "from-blue-800 via-sky-700 to-gray-500";
-    if (c.includes("fog") || c.includes("mist"))
-      return "from-gray-700 via-gray-600 to-gray-500";
-    return "from-gray-900 via-gray-800 to-gray-700";
-  } else {
-    if (c.includes("sunny"))
-      return "from-yellow-300 via-orange-300 to-amber-200";
-    if (c.includes("cloud")) return "from-gray-300 via-slate-200 to-gray-100";
-    if (c.includes("rain")) return "from-blue-400 via-blue-300 to-slate-200";
-    if (c.includes("thunder"))
-      return "from-gray-500 via-gray-400 to-indigo-300";
-    if (c.includes("snow")) return "from-blue-200 via-sky-100 to-gray-100";
-    if (c.includes("fog") || c.includes("mist"))
-      return "from-gray-300 via-gray-200 to-gray-100";
-    return "from-blue-100 via-indigo-200 to-purple-200";
-  }
-};
-
 const renderIcon = (name) => {
   switch (name) {
     case "cloudy":
@@ -101,7 +74,6 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [filteredCities, setFilteredCities] = useState(cities);
 
@@ -145,30 +117,18 @@ function App() {
     }
   }, [city]);
 
-  const weatherCondition = weather?.current?.condition?.text || "";
-  const bgGradient = getWeatherBackground(weatherCondition, darkMode);
-  const textColor = darkMode ? "text-white" : "text-gray-900";
-
   return (
-    <div
-      className={`min-h-screen w-full flex flex-col md:flex-row transition-all duration-500 bg-gradient-to-br ${bgGradient} ${textColor}`}
-    >
+    <div className="min-h-screen w-full flex flex-col md:flex-row transition-all duration-500 bg-gradient-to-br from-blue-400 via-blue-300 to-slate-200 text-gray-900">
       {/* Mobile Topbar */}
       <div className="md:hidden flex justify-between items-center p-4 bg-black/30 text-white">
         <button onClick={() => setShowSidebar(!showSidebar)}>
           {showSidebar ? "✖️ Close" : "📍 Cities"}
         </button>
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="text-sm bg-white/20 px-3 py-1 rounded"
-        >
-          {darkMode ? "☀️ Light" : "🌙 Dark"}
-        </button>
       </div>
 
       {/* Sidebar */}
-      <aside
-        className={`${
+      {/* <aside
+        className={`$
           showSidebar ? "block" : "hidden"
         } md:block w-44 min-w-[140px] max-h-screen overflow-y-auto p-4 bg-black/20 text-white space-y-2 scrollbar-thin scrollbar-thumb-white/30`}
       >
@@ -182,23 +142,13 @@ function App() {
             {c}
           </button>
         ))}
-      </aside>
+      </aside> */}
 
       {/* Main content */}
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
-        <div
-          className={`${
-            darkMode ? "bg-white/10 text-white" : "bg-white/80 text-black"
-          } backdrop-blur-md shadow-xl rounded-2xl p-8 max-w-md w-full text-center transition`}
-        >
+        <div className="bg-white/80 text-black backdrop-blur-md shadow-xl rounded-2xl p-8 max-w-md w-full text-center transition">
           <div className="flex justify-between mb-4">
             <h1 className="text-3xl font-bold">🌦 Weather App</h1>
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="hidden md:block text-sm px-3 py-1 rounded bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 transition"
-            >
-              {darkMode ? "☀️ Light" : "🌙 Dark"}
-            </button>
           </div>
 
           <div className="flex gap-2 mb-4">
@@ -237,9 +187,7 @@ function App() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.6 }}
-                className={`mt-6 p-6 rounded-xl ${textColor} ${
-                  darkMode ? "bg-black text-white" : "bg-gray-100 text-black"
-                } backdrop-blur-xl shadow-md transition`}
+                className="mt-6 p-6 rounded-xl text-black bg-gray-100 backdrop-blur-xl shadow-md transition"
               >
                 <h2 className="text-xl font-bold mb-2">
                   {weather.location.name}, {weather.location.country}
