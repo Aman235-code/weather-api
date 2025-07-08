@@ -151,20 +151,22 @@ function App() {
             <h1 className="text-3xl font-bold">🌦 Weather App</h1>
           </div>
 
-          <div className="flex gap-2 mb-4">
+          <div className="flex flex-col gap-2 mb-4">
             <input
               type="text"
               placeholder="Enter city name"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="flex-1 px-4 py-2 rounded-md text-black focus:outline-none"
+              className="px-4 py-2 rounded-md text-black focus:outline-none border border-gray-300"
             />
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => fetchWeather()}
-              className="bg-yellow-400 text-black px-4 py-2 rounded-md hover:bg-yellow-300 transition"
+              className="bg-yellow-400 text-black px-4 py-2 rounded-md hover:bg-yellow-300 transition font-semibold shadow"
             >
-              Search
-            </button>
+              🔍 Search
+            </motion.button>
           </div>
 
           {loading && (
